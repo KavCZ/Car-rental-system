@@ -9,5 +9,12 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module"
+  "dependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
+    "core-js": "^3.35.0",
+    "nodemon": "^3.0.2",
+    "pg": "^8.11.3",
+    "psql": "^0.0.1"
+  }
 }
