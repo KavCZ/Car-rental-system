@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const { pool, secretKey } = require("../../configs/databaseConfig.js");
 
 /* 
--- příklad testovacích dat --
+-- test data example --
 
 {
   "first_name": "Bedřich",
@@ -15,7 +15,7 @@ const { pool, secretKey } = require("../../configs/databaseConfig.js");
 }
 */
 
-async function register(req, res) {
+async function registerUser(req, res) {
     const { first_name, last_name, birthday, email, phone_number, password } = req.body;
 
     let client;
@@ -23,40 +23,45 @@ async function register(req, res) {
     try {
         client = await pool.connect();
 
-        // Kontrola, zda je uživatel přítomen v databázi
+        // Check if the user is present in the database
         const data = await client.query('SELECT * FROM users WHERE email=$1;', [email]);
         const existingUser = data.rows[0];
 
         if (existingUser) {
-            console.log(`Uživatel s emailem ${email} již existuje.`);
-            return res.status(400).json({ error: "Email je již zaregistrován, přihlašte se." });
+            console.log(`User with email ${email} already exists.`);
+            return res.status(400).json({ error: "Email is already registered, please log in." });
         }
 
-        // Hashování hesla uživatele
+        // Hashing the user's password
         const password_hash = await bcrypt.hash(password, 10);
 
-        // Získání nejvyšší hodnoty user_id z databáze
+        // Retrieving the highest value of user_id from the database
         const maxUserIdQuery = await client.query('SELECT MAX(user_id) FROM users');
-        const maxUserId = maxUserIdQuery.rows[0].max || 0; // Pokud není žádný uživatel v databázi, použijeme 0
+        const maxUserId = maxUserIdQuery.rows[0].max || 0;
 
-        // Přidělení nového user_id pro nového uživatele
+        // Assigning a new user_id for the new user
         const newUser_id = maxUserId + 1;
 
-        // Uložení uživatele do databáze
+        // Saving the user to the database
         await client.query('INSERT INTO users (user_id, first_name, last_name, birthday, email, phone_number, password_hash) VALUES ($1, $2, $3, $4, $5, $6, $7);',
             [newUser_id, first_name, last_name, birthday, email, phone_number, password_hash]);
 
-        // Podepisování webového tokenu JSON pro každého uživatele
+        // Signing a JSON web token for the user
         const token = sign({ email: email }, secretKey);
 
-        res.status(200).send({ message: 'Uživatel přidán do databáze' });
+        res.status(200).send({ message: 'User added to the database', token: token });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Chyba při registraci uživatele!" });
+        res.status(500).json({ error: "Error during user registration!" });
+    } finally {
+        if (client) {
+            client.release();
+        }
     }
 }
 
-module.exports = register;
+module.exports = registerUser;
+
 
 
 

@@ -8,7 +8,7 @@ async function getAllEvents(req, res) {
         res.status(200).json(events);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Chyba při získávání rezervovaných termínů z databáze." });
+        res.status(500).json({ error: "Error retrieving reserved events from the database." });
     }
 }
 

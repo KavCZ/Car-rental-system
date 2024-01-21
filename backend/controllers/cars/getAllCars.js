@@ -8,8 +8,9 @@ async function getAllCars(req, res) {
         res.status(200).json(cars);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Chyba při získávání aut z databáze." });
+        res.status(500).json({ error: "Error retrieving cars from the database." });
     }
 }
 
 module.exports = getAllCars;
+

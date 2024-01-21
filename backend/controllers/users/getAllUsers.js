@@ -8,8 +8,9 @@ async function getAllUsers(req, res) {
         res.status(200).json(users);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Chyba při získávání uživatelů z databáze." });
+        res.status(500).json({ error: "Error retrieving users from the database." });
     }
 }
 
 module.exports = getAllUsers;
+

@@ -8,15 +8,16 @@ async function getCarById(req, res) {
         const result = await client.query('SELECT * FROM cars WHERE car_id = $1', [car_id]);
 
         if (result.rows.length === 0) {
-            res.status(404).json({ error: "Vozidlo nenalezeno" });
+            res.status(404).json({ error: "Vehicle not found" });
         } else {
             const car = result.rows[0];
             res.status(200).json(car);
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Chyba při získávání vozidla z databáze." });
+        res.status(500).json({ error: "Error retrieving the vehicle from the database." });
     }
 }
 
 module.exports = getCarById;
+

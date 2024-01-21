@@ -17,7 +17,7 @@ const pool = new Pool({
   const client = await pool.connect();
   try {
     const result = await client.query('SELECT current_timestamp AS current_time');
-    console.log("Start funkční konfigurace: " + result.rows[0].current_time);
+    console.log("Functional configuration started: " + result.rows[0].current_time);
   } finally {
     client.release();
   }

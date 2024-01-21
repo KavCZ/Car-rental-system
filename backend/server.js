@@ -29,10 +29,9 @@ app.listen(port, () => {
 
 pool.connect((err) => {
     if (err) {
-        console.log("Chyba připojení k databázi ..." + err);
-    }
-    else {
-        console.log("Databáze online ... ");
+        console.log("Database connection error: " + err);
+    } else {
+        console.log("Database online ... ");
     }
 });
 
