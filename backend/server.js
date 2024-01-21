@@ -1,26 +1,28 @@
-const { json } = require("express");
-const http = require('http');
-const pool = require("./configs/databaseConfig.js");
 const express = require("express");
+const { pool } = require("./configs/databaseConfig.js");
 const cors = require("cors");
-const user = require('./routes/users.js');
-
+const users = require('./routes/users.js');
+const cars = require('./routes/cars.js');
 const app = express();
+const port = 8000;
 
-app.use(json());
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.url}`);
+    next();
+});
 
+app.use(express.json());
 app.use(cors());
 
-app.use("/user", user);
-
-const port = process.env.PORT || 5432
-
-
-
-;
+app.use("/users", users);
+app.use("/cars", cars);
 
 app.get("/", (_req, res) => {
     res.status(200).send("Server online ...")
+});
+
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}/`);
 });
 
 pool.connect((err) => {
@@ -32,14 +34,4 @@ pool.connect((err) => {
     }
 });
 
-const server = http.createServer((_req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('Server online\n');
-    console.log("Server online...");
-});
-
-server.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}/`);
-});
-module.exports = server;
+module.exports = app;
