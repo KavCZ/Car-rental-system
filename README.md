@@ -1,2 +1,2 @@
->>>Car-Rental-system<<<
+Car-Rental-system<<<
 Reservation system for car rental, this code represents the reservation system of a car rental service. Users, cars, and reservations are stored in the database.The reservation system includes registration, login, and an admin section. Admin rights must be configured in the user database field "is_admin" or can be utilized with test data provided in the test data manual located in the root directory, where you can also find the database schema. Technologies used include Node.js, React, and PostgreSQL.
