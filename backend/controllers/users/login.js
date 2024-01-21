@@ -2,6 +2,15 @@ const { compare } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 const { pool, secretKey } = require("../../configs/databaseConfig.js");
 
+/* 
+-- příklad testovacích dat --
+
+{
+  "email": "bedrichmaly@mail.cz",
+  "password": "bedrichmaly"
+}
+*/
+
 async function login(req, res) {
     const { email, password } = req.body;
 
