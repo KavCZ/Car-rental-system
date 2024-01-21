@@ -1,18 +1,37 @@
-// Import the http module to create an HTTP server and pool from dbConfig.js for database operations.
-const http = require('http');
-const pool = require('./configs/dbconfig.js');
-const express = require("express");
 const { json } = require("express");
+const http = require('http');
+const pool = require("./configs/databaseConfig.js");
+const express = require("express");
 const cors = require("cors");
+const user = require('./routes/users.js');
 
 const app = express();
 
 app.use(json());
+
 app.use(cors());
 
-const port = 3000;
+app.use("/user", user);
 
-// Create an HTTP server that responds to all incoming requests with the text "Server online".
+const port = process.env.PORT || 5432
+
+
+
+;
+
+app.get("/", (_req, res) => {
+    res.status(200).send("Server online ...")
+});
+
+pool.connect((err) => {
+    if (err) {
+        console.log("Chyba připojení k databázi ..." + err);
+    }
+    else {
+        console.log("Databáze online ... ");
+    }
+});
+
 const server = http.createServer((_req, res) => {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
@@ -20,7 +39,7 @@ const server = http.createServer((_req, res) => {
     console.log("Server online...");
 });
 
-// Set the server to listen on the given port.
 server.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/`);
 });
+module.exports = server;
