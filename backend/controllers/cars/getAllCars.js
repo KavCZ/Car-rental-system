@@ -1,4 +1,4 @@
-const pool = require("../../configs/databaseConfig.js");
+const { pool } = require("../../configs/databaseConfig.js");
 
 async function getAllCars(req, res) {
     try {

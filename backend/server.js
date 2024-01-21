@@ -3,6 +3,7 @@ const { pool } = require("./configs/databaseConfig.js");
 const cors = require("cors");
 const users = require('./routes/users.js');
 const cars = require('./routes/cars.js');
+const events = require('./routes/events.js');
 const app = express();
 const port = 8000;
 
@@ -16,6 +17,7 @@ app.use(cors());
 
 app.use("/users", users);
 app.use("/cars", cars);
+app.use("/events", events);
 
 app.get("/", (_req, res) => {
     res.status(200).send("Server online ...")

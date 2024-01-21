@@ -1,4 +1,4 @@
-const pool = require("../../configs/databaseConfig.js");
+const { pool } = require("../../configs/databaseConfig.js");
 
 async function getUserById(req, res) {
     const user_id = req.params.user_id;

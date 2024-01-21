@@ -1,43 +1,45 @@
 const { compare } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
-const pool = require("../../configs/databaseConfig.js");
+const { pool, secretKey } = require("../../configs/databaseConfig.js");
 
 async function login(req, res) {
-    /* Kontrola zda je uživatel registrován v databázi------------------------------------------------------------*/
     const { email, password } = req.body;
+
+    let client;
+
     try {
-        const client = await pool.connect();
-        const data = await client.query('SELECT * FROM users WHERE email= $1;', [email]);
-        const user = data.rows;
-        if (user.length === 0) {
-            res.status(400).json({
-                error: "Uživatel není přihlášen, přihlašte se",
-            });
+        client = await pool.connect();
+
+        // Kontrola, zda je uživatel přítomen v databázi
+        const data = await client.query('SELECT * FROM users WHERE email = $1;', [email]);
+        const existingUser = data.rows[0];
+
+        if (!existingUser) {
+            console.log(`Uživatel s emailem ${email} nenalezen.`);
+            return res.status(400).json({ error: "Uživatel není registrován, zaregistrujte se" });
         }
-        else {
-            /* Porovnání hashovaného hesla s heslem uživatele-----------------------------------------------------*/
-            try {
-                const result = await compare(password, user[0].password);
-                if (result === true) {
-                    const token = sign({email: email}, process.env.SECRET_KEYE);
-                    res.status(200).json({message: "Uživatel je přihlášen!", token: token});
-                }
-                else {
-                    /* Řešení chyb při přihlašování uživatele-----------------------------------------------------*/
-                    if (result != true) res.status(400).json({error: "Vložte správné heslo!"});
-                }
-            } catch (err) {
-                res.status(500).json({
-                    error: "Server error",
-                });
-            }
+
+        // Porovnání hashovaného hesla s heslem uživatele
+        const result = await compare(password, existingUser.password_hash);
+
+        if (result === true) {
+            const token = sign({ email: email }, secretKey);
+            console.log(`Uživatel ${email} úspěšně přihlášen.`);
+            return res.status(200).json({ message: "Uživatel je přihlášen!", token: token });
+        } else {
+            console.log(`Špatné heslo pro uživatele ${email}.`);
+            return res.status(400).json({ error: "Vložte správné heslo!" });
         }
     } catch (err) {
-        console.log(err);
-        res.status(500).json({
-            error: "Chyba databáze při přihlašování!",
-        });
-    };
+        console.error(err);
+        return res.status(500).json({ error: "Chyba při přihlašování uživatele!" });
+    } finally {
+        if (client) {
+            client.release();
+        }
+    }
 }
 
 module.exports = login;
+
+
