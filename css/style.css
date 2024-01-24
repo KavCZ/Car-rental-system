@@ -1,0 +1,292 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+h2 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-top: 2.5em;
+    margin-bottom: 1.25em;
+}
+
+p {
+    font-size: 0.85rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+}
+
+.bg_theme {
+    background-image: url("/src/bg_gradient.png");
+}
+
+.more-info {
+    width: 40px;
+    position: absolute;
+    bottom: -43px;
+    right: 15px;
+    border-radius: 50%;
+    opacity: 0.4;
+    z-index: 100;
+    cursor: pointer;
+}
+
+.nav_text {
+    font-size: 0.75rem;
+    position: absolute;
+    bottom: -30px;
+    left: 155px;
+    cursor: pointer;
+}
+
+.back {
+    top: 15px;
+    left: 15px;
+    transform: rotate(180deg);
+}
+
+.fb_logo_kav {
+    width: 40px;
+    position: absolute;
+    bottom: -180px;
+    left: 70px;
+    cursor: pointer;
+}
+
+.li_logo_kav {
+    width: 40px;
+    position: absolute;
+    bottom: -180px;
+    left: 135px;
+    cursor: pointer;
+}
+
+.gh_logo_kav {
+    width: 40px;
+    position: absolute;
+    bottom: -180px;
+    left: 200px;
+    cursor: pointer;
+}
+
+.fb_logo_dodi {
+    width: 40px;
+    position: absolute;
+    bottom: -235px;
+    left: 90px;
+    cursor: pointer;
+}
+
+.li_logo_dodi {
+    width: 40px;
+    position: absolute;
+    bottom: -235px;
+    left: 175px;
+    cursor: pointer;
+}
+
+.kontakt_text_dodi {
+    font-size: 0.7rem;
+    position: absolute;
+    top: 305px;
+    left: 58px;
+}
+
+.kontakt_text_kav {
+    font-size: 0.7rem;
+    position: absolute;
+    top: 305px;
+    left: 53px;
+}
+
+.e-card {
+    background: transparent;
+    background-image: url("/src/frame_300x300px.png");
+    background-size: cover;
+    position: relative;
+    width: 300px;
+    height: 300px;
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+.e-card-detail {
+    height: 600px;
+    background-image: url("/src/frame_300x600px.png");
+}
+
+.top_card {
+    margin: 5% auto 2%;
+}
+
+.bottom_card {
+    margin: 2% auto 5%;
+}
+
+.wave {
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    opacity: 0.5;
+    left: 0;
+    top: 0;
+    margin-left: -50%;
+    margin-top: -50%;
+    background: linear-gradient(744deg, #484333, #7f7638, #969a96);
+}
+
+.personal_photo {
+    width: 7em;
+    margin-top: -3em;
+    padding-bottom: 0.5em;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.personal_photo_detail {
+    width: 75px;
+    position: absolute;
+    top: -25px;
+    right: 20px;
+}
+
+.infotop {
+    text-align: center;
+    font-size: 1rem;
+    position: absolute;
+    top: 6em;
+    left: 0;
+    right: 0;
+    color: rgb(255, 255, 255);
+    font-weight: bolder;
+}
+
+.name {
+    font-size: 1.15rem;
+    font-weight: bold;
+    position: relative;
+    top: 0.5em;
+    text-transform: uppercase;
+}
+
+.name_detail_dodi {
+    font-size: 1.35rem;
+    position: absolute;
+    top: -5px;
+    left: 35px;
+}
+
+.name_detail_kav {
+    font-size: 1.35rem;
+    position: absolute;
+    top: -5px;
+    left: 70px;
+}
+
+.wave:nth-child(2),
+.wave:nth-child(3) {
+    top: 210px;
+}
+
+.playing .wave {
+    border-radius: 40%;
+    animation: wave 6500ms infinite linear;
+}
+
+.wave {
+    border-radius: 40%;
+    animation: wave 70s infinite linear;
+}
+
+.playing .wave:nth-child(2) {
+    animation-duration: 9000ms;
+}
+
+.wave:nth-child(2) {
+    animation-duration: 60s;
+}
+
+.playing .wave:nth-child(3) {
+    animation-duration: 13000ms;
+}
+
+.wave:nth-child(3) {
+    animation-duration: 50s;
+}
+
+@keyframes wave {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+ /**
+* ----------------------------------------
+* animation bounce-in-top
+* ----------------------------------------
+*/
+
+@-webkit-keyframes bounce-in-top {
+    0% {
+        -webkit-transform: translateY(-500px);
+        transform: translateY(-500px);
+        -webkit-animation-timing-function: ease-in;
+        animation-timing-function: ease-in;
+        opacity: 0
+    }
+
+    100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+        -webkit-animation-timing-function: ease-out;
+        animation-timing-function: ease-out;
+        opacity: 1
+    }
+
+    
+}
+
+@keyframes bounce-in-top {
+    0% {
+        -webkit-transform: translateY(-500px);
+        transform: translateY(-500px);
+        -webkit-animation-timing-function: ease-in;
+        animation-timing-function: ease-in;
+        opacity: 0
+    }
+
+    100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+        -webkit-animation-timing-function: ease-out;
+        animation-timing-function: ease-out;
+        opacity: 1
+    }
+
+    
+}
+
+/* Media query pro obrazovky s maximální šířkou 450px */
+
+@media (max-width: 450px) {
+    .bg_theme {
+        background-image: url("/src/bg_gradient_mini.png");
+    }
+}
